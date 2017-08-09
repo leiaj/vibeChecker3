@@ -5,26 +5,36 @@ export default class VibeForm extends Component {
   constructor(){
     super()
     this.state = {
-      query: ''
+      query: '',
+      tweets: []
     }
 
     this.handleChange = this.handleChange.bind(this)
+    // this.fetchTweets = this.fetchTweets.bind(this)
   }
 
   handleChange(e){
+    e.preventDefault()
+    const q = this.state.query
     console.log(e.target.value)
     this.setState({
       query: e.target.value
     })
+    console.log("Completed change, about to fetch data")
+    fetch(`http://https://api.twitter.com/1.1/search/tweets.json?q=${q}&count=1`)
+    .then(data => data.json())
+    .then(console.log("We have the data"))
   }
 
-  fetchTweets(query){
-    console.log("Here I go to fetch")
-    fetch(`http://https://api.twitter.com/1.1/search/tweets.json?q=${query}&count=10`)
-    this.setState({
-      query: query
-    })
-  }
+  // fetchTweets(query){
+  //   fetch(`http://https://api.twitter.com/1.1/search/tweets.json?q=${query}&count=1`)
+  //   .then(data => data.json())
+  //   .then(console.log("we have the data"))
+  //   // .then(results => this.setState({
+  //   //   tweets: results.stauses.text
+  //   // }))
+  //   // console.log(this.state.tweets)
+  // }
 
 
 
